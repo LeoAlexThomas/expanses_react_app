@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from "@chakra-ui/react";
+import { Button, ButtonProps } from "@/components/ui/button";
 
 const PrimaryButton = (props: ButtonProps) => {
   return (
@@ -9,6 +9,7 @@ const PrimaryButton = (props: ButtonProps) => {
       _hover={{
         bgColor: "blue.600",
       }}
+      px={4}
       {...props}
     />
   );
@@ -26,6 +27,7 @@ const SecondaryButton = (props: ButtonProps) => {
         bgColor: "blue.50",
         borderColor: "blue.500",
       }}
+      px={4}
       {...props}
     />
   );

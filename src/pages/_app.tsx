@@ -11,7 +11,6 @@ import { PageLoaderProvider } from "@/context/pageLoaderContext";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Provider } from "@/components/ui/provider";
-import { defaultSystem } from "@chakra-ui/react";
 
 export const swrConfigData = {
   fetcher: api,

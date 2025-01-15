@@ -15,6 +15,7 @@ import {
   UseFormReturn,
 } from "react-hook-form";
 import { Field } from "@/components/ui/field";
+import { isEmpty } from "lodash";
 
 interface CustomTextAreaFieldProps<T extends FieldValues> {
   name: Path<T>;
@@ -41,18 +42,18 @@ function TextareaField<T extends FieldValues>({
   } = hForm;
 
   const error = get(errors, name);
-
+  console.log("Error Message: ", error?.message);
   return (
     <Field
       required={Boolean(rules?.required)}
       invalid={Boolean(error)}
       errorText={
-        error?.message ?? error?.type === "required"
+        isEmpty(error?.message) || error?.type === "required"
           ? "This field is required"
           : "Something went wrong"
       }
     >
-      <VStack alignItems="stretch">
+      <VStack alignItems="stretch" w="100%">
         <Text
           fontSize={["12px", null, "16px"]}
           fontWeight={500}
@@ -72,6 +73,9 @@ function TextareaField<T extends FieldValues>({
             lineHeight="1.25"
             border="1px solid black"
             _hover={{}}
+            bg="white"
+            borderRadius="8px"
+            p={2}
             {...props}
             {...register(name, rules)}
           />

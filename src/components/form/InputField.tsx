@@ -48,7 +48,7 @@ function InputField<T extends FieldValues>({
       invalid={Boolean(error)}
       errorText={error ? "This field is required" : ""}
     >
-      <VStack alignItems="stretch">
+      <VStack alignItems="stretch" w="100%">
         <Text
           fontSize={["12px", null, "16px"]}
           fontWeight={500}
@@ -69,6 +69,8 @@ function InputField<T extends FieldValues>({
             border="1px solid black"
             bg="white"
             _hover={{}}
+            borderRadius="8px"
+            p={2}
             {...props}
             {...register(name, rules)}
           />

@@ -2,9 +2,10 @@ import Head from "next/head";
 import { VStack, Box, Text, IconButton, useDisclosure } from "@chakra-ui/react";
 import { colors } from "@/components/utils";
 import { AddCircle } from "@emotion-icons/fluentui-system-regular/AddCircle";
+import ProjectFormModel from "@/components/project/ProjectFormModel";
 
 export default function Home() {
-  const { open, onOpen, onClose } = useDisclosure();
+  const { open: isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
@@ -15,6 +16,7 @@ export default function Home() {
       </Head>
       <VStack alignItems="stretch">
         <Header />
+        <ProjectFormModel isOpen={isOpen} onClose={onClose} />
         <IconButton
           pos="fixed"
           bottom={4}
@@ -25,6 +27,7 @@ export default function Home() {
           _icon={{
             boxSize: ["30px", null, "35px"],
           }}
+          onClick={onOpen}
         >
           <AddCircle />
         </IconButton>
