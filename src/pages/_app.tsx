@@ -38,7 +38,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         {/* NOTE: Below code is to prevent zooming in iPhone when input is focused */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      {/* <FirebaseAppProvider> */}
       <SWRConfig value={swrConfigData}>
         <LoginCheckProvider>
           <UserInfoProvider>
@@ -50,7 +49,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           </UserInfoProvider>
         </LoginCheckProvider>
       </SWRConfig>
-      {/* </FirebaseAppProvider> */}
     </>
   );
 }

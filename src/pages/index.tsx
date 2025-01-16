@@ -1,8 +1,18 @@
 import Head from "next/head";
-import { VStack, Box, Text, IconButton, useDisclosure } from "@chakra-ui/react";
+import {
+  VStack,
+  Box,
+  Text,
+  IconButton,
+  useDisclosure,
+  HStack,
+} from "@chakra-ui/react";
 import { colors } from "@/components/utils";
 import { AddCircle } from "@emotion-icons/fluentui-system-regular/AddCircle";
 import ProjectFormModel from "@/components/project/ProjectFormModel";
+import WithLoader from "@/components/WithLoader";
+import { ProjectInterface } from "@/types/project";
+import ProjectCard from "@/components/project/ProjectCard";
 
 export default function Home() {
   const { open: isOpen, onOpen, onClose } = useDisclosure();
@@ -17,6 +27,21 @@ export default function Home() {
       <VStack alignItems="stretch">
         <Header />
         <ProjectFormModel isOpen={isOpen} onClose={onClose} />
+        <WithLoader apiUrl={`/projects/all`}>
+          {({ data }: { data: ProjectInterface[] }) => {
+            return (
+              <HStack wrap="wrap" spaceY={2} spaceX={4} pb={3}>
+                {data.map((project, index) => {
+                  return (
+                    <Box key={project._id} pl={index == 0 ? 4 : 0}>
+                      <ProjectCard project={project} />
+                    </Box>
+                  );
+                })}
+              </HStack>
+            );
+          }}
+        </WithLoader>
         <IconButton
           pos="fixed"
           bottom={4}

@@ -14,7 +14,6 @@ const ProjectForm = ({ onSuccess }: { onSuccess?: () => void }) => {
     mode: "onChange",
     defaultValues: {
       title: "",
-      description: "",
       totalSpent: 0,
     },
   });
@@ -24,7 +23,7 @@ const ProjectForm = ({ onSuccess }: { onSuccess?: () => void }) => {
       apiFn: () =>
         api("/project/create", {
           method: "POST",
-          data: values,
+          data: { ...values, description: values.description || null },
         }),
       successMsg: {
         title: "Project created successfully",
@@ -52,7 +51,7 @@ const ProjectForm = ({ onSuccess }: { onSuccess?: () => void }) => {
           hForm={projectHookForm}
           name="description"
           title="Description"
-          rules={{ required: true }}
+          rules={{ required: false }}
           h="100px"
           maxH={"100px"}
         />
