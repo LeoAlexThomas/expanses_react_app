@@ -1,18 +1,11 @@
 import Head from "next/head";
-import {
-  VStack,
-  Box,
-  Text,
-  IconButton,
-  useDisclosure,
-  HStack,
-} from "@chakra-ui/react";
-import { colors } from "@/components/utils";
+import { Box, IconButton, useDisclosure, HStack } from "@chakra-ui/react";
 import { AddCircle } from "@emotion-icons/fluentui-system-regular/AddCircle";
 import ProjectFormModel from "@/components/project/ProjectFormModel";
 import WithLoader from "@/components/WithLoader";
 import { ProjectInterface } from "@/types/project";
 import ProjectCard from "@/components/project/ProjectCard";
+import Layout from "@/components/Layout";
 
 export default function Home() {
   const { open: isOpen, onOpen, onClose } = useDisclosure();
@@ -24,16 +17,22 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <VStack alignItems="stretch">
-        <Header />
+      <Layout>
         <ProjectFormModel isOpen={isOpen} onClose={onClose} />
         <WithLoader apiUrl={`/projects/all`}>
           {({ data }: { data: ProjectInterface[] }) => {
             return (
-              <HStack wrap="wrap" spaceY={2} spaceX={4} pb={3}>
+              <HStack
+                wrap="wrap"
+                gap={4}
+                px={6}
+                pt={3}
+                pb={16}
+                alignItems="flex-start"
+              >
                 {data.map((project, index) => {
                   return (
-                    <Box key={project._id} pl={index == 0 ? 4 : 0}>
+                    <Box key={project._id}>
                       <ProjectCard project={project} />
                     </Box>
                   );
@@ -56,23 +55,7 @@ export default function Home() {
         >
           <AddCircle />
         </IconButton>
-      </VStack>
+      </Layout>
     </>
   );
 }
-
-const Header = () => {
-  return (
-    <Box px={6} py={4} bg={colors.greyColor[7]}>
-      <Text
-        fontFamily="Playfair Display"
-        fontSize={[20, null, 26]}
-        fontWeight={800}
-        lineHeight="1.25"
-        color={colors.greyColor[0]}
-      >
-        Expanses
-      </Text>
-    </Box>
-  );
-};

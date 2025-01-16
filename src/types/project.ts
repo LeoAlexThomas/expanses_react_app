@@ -4,15 +4,21 @@ export interface CreateProjectInterface {
   totalSpent: number;
 }
 
+export interface CreateExpanseInterface {
+  title: string;
+  spent: number;
+  projectId: string;
+}
+
 export interface ProjectInterface {
   _id: string;
   title: string;
   description?: string;
-  expanses: ExpansesInterface[];
+  expanses: ExpanseInterface[];
   totalSpent: number;
 }
 
-export interface ExpansesInterface {
+export interface ExpanseInterface {
   _id: string;
   title: string;
   spent: number;

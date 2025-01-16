@@ -1,10 +1,5 @@
-import {
-  DialogBody,
-  DialogContent,
-  DialogRoot,
-  Flex,
-  Spinner,
-} from "@chakra-ui/react";
+import { Flex, Spinner } from "@chakra-ui/react";
+import { DialogBody, DialogContent, DialogRoot } from "./ui/dialog";
 
 interface PageLoaderProps {
   isOpen: boolean;

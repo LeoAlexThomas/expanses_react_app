@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "cross-env ENV=dev next dev",
+    "build": "cross-env ENV=dev next build",
+    "start": "cross-env ENV=dev next start",
+    "stage:build": "cross-env ENV=stage next build",
+    "stage:start": "cross-env ENV=stage next start",
+    "prod:build": "cross-env ENV=prod next build",
+    "prod:start": "cross-env ENV=prod next start",
     "lint": "next lint"
   },
   "dependencies": {
