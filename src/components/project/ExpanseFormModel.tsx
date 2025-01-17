@@ -7,10 +7,12 @@ const ExpanseFormModel = ({
   projectId,
   isOpen,
   onClose,
+  onSuccess,
 }: {
   projectId: string;
   isOpen: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
 }) => {
   return (
     <CustomModel
@@ -26,7 +28,7 @@ const ExpanseFormModel = ({
         </>
       }
     >
-      <ExpansesForm projectId={projectId} onSuccess={onClose} />
+      <ExpansesForm projectId={projectId} onSuccess={onSuccess} />
     </CustomModel>
   );
 };

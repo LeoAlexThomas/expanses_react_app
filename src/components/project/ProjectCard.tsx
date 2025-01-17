@@ -1,12 +1,18 @@
 import { ProjectInterface } from "@/types/project";
-import { Box, chakra, HStack, Text, VStack } from "@chakra-ui/react";
+import { chakra, HStack, Text, VStack } from "@chakra-ui/react";
 import { colors } from "../utils";
 import Link from "next/link";
+import { Avatar, AvatarGroup } from "../ui/avatar";
 
 const ProjectCard = ({ project }: { project: ProjectInterface }) => {
   return (
-    <Link href={`/project/${project._id}`}>
-      <Box p={3} boxShadow="md" borderRadius="8px" w="100%" maxW="350px">
+    <Link
+      href={`/project/${project._id}`}
+      style={{
+        width: "100%",
+      }}
+    >
+      <HStack p={3} boxShadow="md" borderRadius="8px" gap={[4, null, 8]}>
         <VStack alignItems="stretch" spaceY={1}>
           <Text
             fontFamily="Playfair Display"
@@ -16,41 +22,49 @@ const ProjectCard = ({ project }: { project: ProjectInterface }) => {
           >
             {project.title}
           </Text>
+          {project.description && (
+            <Text
+              fontFamily="Roboto"
+              fontSize={["14px", null, "16px"]}
+              lineHeight="1.25"
+              maxLines={2}
+              textOverflow="ellipsis"
+              color={colors.greyColor[5]}
+            >
+              {project.description}
+            </Text>
+          )}
           <Text
             fontFamily="Roboto"
-            fontSize={["14px", null, "16px"]}
+            fontSize={["12px", null, "14px"]}
             lineHeight="1.25"
-            maxLines={2}
-            textOverflow="ellipsis"
-            color={colors.greyColor[5]}
+            fontWeight={500}
           >
-            {project.description}
+            Sub-Expanses: {project.expanses.length}
           </Text>
-          <HStack justifyContent="space-between">
+        </VStack>
+        <VStack alignItems="flex-end">
+          {project.totalSpent > 0 && (
             <Text
               fontFamily="Roboto"
               fontSize={["12px", null, "14px"]}
               lineHeight="1.25"
               fontWeight={500}
             >
-              Sub-Expanses: {project.expanses.length}
+              Spent:{" "}
+              <chakra.span fontWeight={800} color="red">
+                ₹{project.totalSpent}
+              </chakra.span>
             </Text>
-            {project.totalSpent > 0 && (
-              <Text
-                fontFamily="Roboto"
-                fontSize={["12px", null, "14px"]}
-                lineHeight="1.25"
-                fontWeight={500}
-              >
-                Spent:{" "}
-                <chakra.span fontWeight={800} color="red">
-                  ₹{project.totalSpent}
-                </chakra.span>
-              </Text>
-            )}
-          </HStack>
+          )}
+
+          <AvatarGroup size="sm" stacking="last-on-top">
+            {project.members.map((member) => {
+              return <Avatar key={member.email} name={member.name} />;
+            })}
+          </AvatarGroup>
         </VStack>
-      </Box>
+      </HStack>
     </Link>
   );
 };

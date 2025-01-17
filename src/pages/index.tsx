@@ -19,7 +19,7 @@ export default function Home() {
       </Head>
       <Layout>
         <ProjectFormModel isOpen={isOpen} onClose={onClose} />
-        <WithLoader apiUrl={`/projects/all`}>
+        <WithLoader apiUrl={`/project/all`}>
           {({ data }: { data: ProjectInterface[] }) => {
             return (
               <HStack

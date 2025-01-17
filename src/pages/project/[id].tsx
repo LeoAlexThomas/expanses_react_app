@@ -24,13 +24,17 @@ const ProjectIdPage = () => {
   return (
     <Layout>
       <WithLoader apiUrl={projectId ? `/project/${projectId}` : ""}>
-        {({ data }: { data: ProjectInterface }) => {
+        {({ data, mutate }: { data: ProjectInterface; mutate: () => void }) => {
           return (
             <Box p={4}>
               <ExpanseFormModel
                 isOpen={isOpen}
                 onClose={onClose}
                 projectId={data._id}
+                onSuccess={() => {
+                  mutate();
+                  onClose();
+                }}
               />
               <VStack alignItems="stretch" spaceY={3}>
                 <Stack
@@ -80,10 +84,10 @@ const ProjectIdPage = () => {
                 Expanses:{" "}
               </Text>
               <Spacer h={4} />
-              <SimpleGrid columns={{ base: 1, sm: 2, lg: 6 }} gap={4} pb={3}>
+              <SimpleGrid columns={{ base: 1, sm: 2, lg: 4 }} gap={4} pb={3}>
                 {data.expanses.map((exp) => (
                   <GridItem key={exp._id}>
-                    <ExpanseCard expanse={exp} />
+                    <ExpanseCard expanse={exp} projectMutate={mutate} />
                   </GridItem>
                 ))}
               </SimpleGrid>

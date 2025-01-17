@@ -6,6 +6,7 @@ import InputField from "../form/InputField";
 import { useApi } from "../../hook/useApi";
 import api from "../api";
 import { createExpanseFormId } from "../utils";
+import dayjs from "dayjs";
 
 const ExpansesForm = ({
   projectId,
@@ -15,11 +16,12 @@ const ExpansesForm = ({
   onSuccess?: () => void;
 }) => {
   const { makeApiCall } = useApi();
-  const ExpansesHookForm = useForm<CreateExpanseInterface>({
+  const expansesHookForm = useForm<CreateExpanseInterface>({
     mode: "onChange",
     defaultValues: {
       title: "",
       spent: 0,
+      date: "",
       projectId: projectId,
     },
   });
@@ -29,7 +31,7 @@ const ExpansesForm = ({
       apiFn: () =>
         api("/expanse/create", {
           method: "POST",
-          data: values,
+          data: { ...values, date: dayjs(values.date).toISOString() },
         }),
       successMsg: {
         title: "Expanse added successfully",
@@ -41,25 +43,38 @@ const ExpansesForm = ({
   return (
     <form
       id={createExpanseFormId}
-      onSubmit={ExpansesHookForm.handleSubmit(onSubmit)}
+      onSubmit={expansesHookForm.handleSubmit(onSubmit)}
       style={{
         width: "100%",
       }}
     >
       <VStack alignItems="stretch" spaceY={4}>
         <InputField
-          hForm={ExpansesHookForm}
+          hForm={expansesHookForm}
           name="title"
           title="Title"
+          placeholder="Enter Expanse Title"
           rules={{ required: true }}
         />
         <InputField
-          hForm={ExpansesHookForm}
+          hForm={expansesHookForm}
           name="spent"
           title="Spent Amount"
+          placeholder="Enter Amount"
           type="number"
           rules={{ required: true }}
           min={1}
+        />
+        <InputField
+          hForm={expansesHookForm}
+          name="date"
+          rules={{
+            required: true,
+          }}
+          title="Due Date"
+          placeholder="Select due date..."
+          type="date"
+          min={dayjs().add(1, "day").toISOString().split("T")[0]}
         />
       </VStack>
     </form>

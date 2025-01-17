@@ -7,6 +7,10 @@ import TextareaField from "../form/TextareaField";
 import { createProjectFormId } from "../utils";
 import { useApi } from "../../hook/useApi";
 import api from "../api";
+import CustomReactAsyncSelectField from "../form/CustomReactAsyncSelectField";
+import { UserInterface } from "@/types/user";
+import { isArray } from "lodash";
+import { mutate } from "swr";
 
 const ProjectForm = ({ onSuccess }: { onSuccess?: () => void }) => {
   const { makeApiCall } = useApi();
@@ -15,20 +19,30 @@ const ProjectForm = ({ onSuccess }: { onSuccess?: () => void }) => {
     defaultValues: {
       title: "",
       totalSpent: 0,
+      memberIds: [],
     },
   });
 
   const onSubmit = (values: CreateProjectInterface) => {
+    const requestObj = {
+      ...values,
+      title: values.title.trim(),
+      description: values.description || null,
+      members: values.memberIds.map((member) => member.value),
+    };
     makeApiCall({
       apiFn: () =>
         api("/project/create", {
           method: "POST",
-          data: { ...values, description: values.description || null },
+          data: requestObj,
         }),
       successMsg: {
         title: "Project created successfully",
       },
-      onSuccess: (res) => onSuccess?.(),
+      onSuccess: (res) => {
+        mutate("/project/all");
+        onSuccess?.();
+      },
     });
   };
 
@@ -54,6 +68,27 @@ const ProjectForm = ({ onSuccess }: { onSuccess?: () => void }) => {
           rules={{ required: false }}
           h="100px"
           maxH={"100px"}
+        />
+        <CustomReactAsyncSelectField
+          hForm={projectHookForm}
+          name="memberIds"
+          title="Members"
+          placeholder="Select members for project"
+          isMultiChoice
+          rules={{ required: false }}
+          getOptions={(value) =>
+            api(`/user/all?searchText=${value}`).then(
+              (values: UserInterface[]) => {
+                if (!isArray(values)) {
+                  return [];
+                }
+                return values.map((user) => ({
+                  label: `${user.name} (${user.email})`,
+                  value: user._id,
+                }));
+              }
+            )
+          }
         />
       </VStack>
     </form>
