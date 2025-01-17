@@ -2,10 +2,13 @@ import {
   DialogBody,
   DialogContent,
   DialogFooter,
-  DialogFooterProps,
   DialogHeader,
-  DialogHeaderProps,
   DialogRoot,
+} from "@/components/ui/dialog";
+import {
+  DialogFooterProps,
+  DialogHeaderProps,
+  DialogRootProps,
 } from "@chakra-ui/react";
 
 const CustomModel = ({
@@ -16,6 +19,7 @@ const CustomModel = ({
   children,
   footer,
   modalFooterProps,
+  ...props
 }: {
   isOpen: boolean;
   onClose: () => void;
@@ -24,7 +28,7 @@ const CustomModel = ({
   footer: React.ReactNode;
   modalFooterProps?: DialogFooterProps;
   children: React.ReactNode;
-}) => {
+} & DialogRootProps) => {
   return (
     <DialogRoot
       open={isOpen}
@@ -35,10 +39,23 @@ const CustomModel = ({
       }}
       placement="center"
       size="lg"
+      {...props}
     >
       <DialogContent>
-        <DialogHeader {...modalTitleProps}>{title}</DialogHeader>
-        <DialogBody bg="blue.50">{children}</DialogBody>
+        <DialogHeader
+          fontFamily="Playfair Display"
+          fontSize={["20px", null, "28px"]}
+          fontWeight={800}
+          px={6}
+          py={4}
+          {...modalTitleProps}
+        >
+          {title}
+        </DialogHeader>
+
+        <DialogBody px={6} py={4} bg="blue.50">
+          {children}
+        </DialogBody>
         <DialogFooter py={2} pr={4} {...modalFooterProps}>
           {footer}
         </DialogFooter>

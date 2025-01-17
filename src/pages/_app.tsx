@@ -11,7 +11,6 @@ import { PageLoaderProvider } from "@/context/pageLoaderContext";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Provider } from "@/components/ui/provider";
-import { defaultSystem } from "@chakra-ui/react";
 
 export const swrConfigData = {
   fetcher: api,
@@ -39,7 +38,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         {/* NOTE: Below code is to prevent zooming in iPhone when input is focused */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      {/* <FirebaseAppProvider> */}
       <SWRConfig value={swrConfigData}>
         <LoginCheckProvider>
           <UserInfoProvider>
@@ -51,7 +49,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           </UserInfoProvider>
         </LoginCheckProvider>
       </SWRConfig>
-      {/* </FirebaseAppProvider> */}
     </>
   );
 }

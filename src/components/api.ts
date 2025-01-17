@@ -21,6 +21,7 @@ const api = (route: string, options?: any, baseUrl?: string) => {
   });
 
   const apiBaseUrl = baseUrl ?? getApiUrl();
+
   return axios({
     url: apiBaseUrl + route,
     ...combinedOptions,

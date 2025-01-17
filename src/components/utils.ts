@@ -26,6 +26,7 @@ export const colors = {
 };
 
 export const createProjectFormId = "createProjectFormId";
+export const createExpanseFormId = "createExpanseFormId";
 
 export const userTokenCookieName = "userToken";
 

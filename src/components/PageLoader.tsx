@@ -1,10 +1,5 @@
-import {
-  DialogBody,
-  DialogContent,
-  DialogRoot,
-  Flex,
-  Spinner,
-} from "@chakra-ui/react";
+import { Flex, Spinner } from "@chakra-ui/react";
+import { DialogBody, DialogContent, DialogRoot } from "./ui/dialog";
 
 interface PageLoaderProps {
   isOpen: boolean;
@@ -26,15 +21,7 @@ const PageLoader = (props: PageLoaderProps) => {
       }}
       scrollBehavior="inside"
       size="xs"
-      // isOpen={props.isOpen}
-      // onClose={props.onClose}
-      // isCentered
-      // closeOnEsc={false}
-      // blockScrollOnMount
-      // closeOnOverlayClick={false}
-      // size="xs"
     >
-      {/* <ModalOverlay /> */}
       <DialogContent>
         <DialogBody py={8}>
           <Flex justify="center" align="center" color="black">
