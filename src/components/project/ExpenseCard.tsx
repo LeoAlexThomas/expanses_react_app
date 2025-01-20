@@ -1,4 +1,4 @@
-import { CreateExpanseInterface, ExpanseInterface } from "@/types/project";
+import { CreateExpenseInterface, ExpenseInterface } from "@/types/project";
 import { chakra, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import { Checkbox } from "../ui/checkbox";
@@ -8,14 +8,14 @@ import { Delete } from "@emotion-icons/fluentui-system-regular/Delete";
 import { Edit } from "@emotion-icons/entypo/Edit";
 import { PrimaryButton, SecondaryButton } from "../Buttons";
 import { colors } from "../utils";
-import ExpanseFormModel from "./ExpanseFormModel";
 import CustomModel from "../CustomModal";
+import ExpenseFormModel from "./ExpenseFormModel";
 
-const ExpanseCard = ({
-  expanse,
+const ExpenseCard = ({
+  expense,
   projectMutate,
 }: {
-  expanse: ExpanseInterface;
+  expense: ExpenseInterface;
   projectMutate?: () => void;
 }) => {
   const { open: isOpen, onOpen, onClose } = useDisclosure();
@@ -26,10 +26,10 @@ const ExpanseCard = ({
   } = useDisclosure();
   const { makeApiCall } = useApi();
 
-  const handleUpdateExpense = (values: CreateExpanseInterface) => {
+  const handleUpdateExpense = (values: CreateExpenseInterface) => {
     makeApiCall({
       apiFn: () =>
-        api(`/expanse/update/${expanse._id}`, {
+        api(`/expense/update/${expense._id}`, {
           method: "PUT",
           data: values,
         }),
@@ -43,10 +43,10 @@ const ExpanseCard = ({
     });
   };
 
-  const handleExpanseDelete = () => {
+  const handleExpenseDelete = () => {
     makeApiCall({
       apiFn: () =>
-        api(`/expanse/delete/${expanse._id}`, {
+        api(`/expense/delete/${expense._id}`, {
           method: "DELETE",
         }),
       successMsg: {
@@ -70,16 +70,16 @@ const ExpanseCard = ({
         boxShadow: "md",
       }}
     >
-      <ExpanseFormModel
+      <ExpenseFormModel
         isOpen={isOpen}
         onClose={onClose}
-        projectId={expanse.projectId}
+        projectId={expense.projectId}
         defaultFormValues={{
-          projectId: expanse.projectId,
-          date: dayjs(expanse.date).format("YYYY-MM-DD"),
-          spent: expanse.spent,
-          title: expanse.title,
-          isCompleted: expanse.isCompleted,
+          projectId: expense.projectId,
+          date: dayjs(expense.date).format("YYYY-MM-DD"),
+          spent: expense.spent,
+          title: expense.title,
+          isCompleted: expense.isCompleted,
         }}
         onEditExpense={handleUpdateExpense}
         onSuccess={() => {
@@ -100,7 +100,7 @@ const ExpanseCard = ({
               _hover={{
                 bg: colors.redColor[1],
               }}
-              onClick={handleExpanseDelete}
+              onClick={handleExpenseDelete}
             >
               Delete
             </PrimaryButton>
@@ -120,7 +120,7 @@ const ExpanseCard = ({
             fontWeight={600}
             lineHeight="1.25"
           >
-            {expanse.title}
+            {expense.title}
           </Text>
           <Text
             fontFamily="Roboto"
@@ -128,9 +128,9 @@ const ExpanseCard = ({
             lineHeight="1.25"
             fontWeight={500}
           >
-            {expanse.isCompleted ? "Spent: " : "Payment: "}
+            {expense.isCompleted ? "Spent: " : "Payment: "}
             <chakra.span fontWeight={800} color="red">
-              ₹{expanse.spent}
+              ₹{expense.spent}
             </chakra.span>
           </Text>
           <Text
@@ -140,15 +140,15 @@ const ExpanseCard = ({
           >
             Last Date:{" "}
             <chakra.span fontWeight={500}>
-              {dayjs(expanse.date).format("MMM DD, YYYY")}
+              {dayjs(expense.date).format("MMM DD, YYYY")}
             </chakra.span>
           </Text>
         </VStack>
         <Checkbox
-          checked={expanse.isCompleted}
+          checked={expense.isCompleted}
           onCheckedChange={(e) =>
             handleUpdateExpense({
-              ...expanse,
+              ...expense,
               isCompleted: e.checked as boolean,
             })
           }
@@ -191,4 +191,4 @@ const ExpanseCard = ({
   );
 };
 
-export default ExpanseCard;
+export default ExpenseCard;

@@ -11,8 +11,8 @@ const getEnvConfig = () => {
     case "prod":
       return {
         env: "prod",
-        apiUrl: "https://expanse-backend.netlify.app/.netlify/functions/api",
-        websiteUrl: "https://expanses.com/api",
+        apiUrl: "https://expense-backend.netlify.app/.netlify/functions/api",
+        websiteUrl: "https://expenses.com/api",
       };
   }
 };

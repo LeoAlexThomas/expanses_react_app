@@ -8,7 +8,7 @@ export interface CreateProjectInterface {
   memberIds: CustomSelectOptions[];
 }
 
-export interface CreateExpanseInterface {
+export interface CreateExpenseInterface {
   title: string;
   spent: number;
   date: string;
@@ -20,13 +20,13 @@ export interface ProjectInterface {
   _id: string;
   title: string;
   description?: string;
-  expanses: ExpanseInterface[];
+  expenses: ExpenseInterface[];
   members: UserInterface[];
   owner: UserInterface;
   totalSpent: number;
 }
 
-export interface ExpanseInterface {
+export interface ExpenseInterface {
   _id: string;
   title: string;
   spent: number;

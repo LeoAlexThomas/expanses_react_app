@@ -1,7 +1,5 @@
 import { PrimaryButton, SecondaryButton } from "@/components/Buttons";
 import Layout from "@/components/Layout";
-import ExpanseCard from "@/components/project/ExpanseCard";
-import ExpanseFormModel from "@/components/project/ExpanseFormModel";
 import { colors } from "@/components/utils";
 import WithLoader from "@/components/WithLoader";
 import { ProjectInterface } from "@/types/project";
@@ -26,6 +24,8 @@ import { useApi } from "@/hook/useApi";
 import api from "@/components/api";
 import ProjectFormModel from "@/components/project/ProjectFormModel";
 import { isEmpty } from "lodash";
+import ExpenseFormModel from "@/components/project/ExpenseFormModel";
+import ExpenseCard from "@/components/project/ExpenseCard";
 
 const ProjectIdPage = () => {
   const { makeApiCall } = useApi();
@@ -88,7 +88,7 @@ const ProjectIdPage = () => {
         {({ data, mutate }: { data: ProjectInterface; mutate: () => void }) => {
           return (
             <Box p={4}>
-              <ExpanseFormModel
+              <ExpenseFormModel
                 isOpen={isOpen}
                 onClose={onClose}
                 projectId={data._id}
@@ -210,18 +210,18 @@ const ProjectIdPage = () => {
                 fontWeight={800}
                 lineHeight="1.25"
               >
-                Expanses:{" "}
+                Expenses:{" "}
               </Text>
               <Spacer h={4} />
-              {isEmpty(data.expanses) ? (
+              {isEmpty(data.expenses) ? (
                 <Center>
                   <Text>No Expenses found</Text>
                 </Center>
               ) : (
                 <SimpleGrid columns={{ base: 1, sm: 2, lg: 4 }} gap={4} pb={3}>
-                  {data.expanses.map((exp) => (
+                  {data.expenses.map((exp) => (
                     <GridItem key={exp._id}>
-                      <ExpanseCard expanse={exp} projectMutate={mutate} />
+                      <ExpenseCard expense={exp} projectMutate={mutate} />
                     </GridItem>
                   ))}
                 </SimpleGrid>

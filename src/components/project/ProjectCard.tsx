@@ -52,7 +52,7 @@ const ProjectCard = ({ project }: { project: ProjectInterface }) => {
             lineHeight="1.25"
             fontWeight={500}
           >
-            Sub-Expanses: {project.expanses.length}
+            Sub-Expenses: {project.expenses.length}
           </Text>
         </VStack>
         <VStack alignItems="flex-end">

@@ -1,15 +1,15 @@
 import { useForm } from "react-hook-form";
-import { CreateExpanseInterface } from "../../types/project";
+import { CreateExpenseInterface } from "../../types/project";
 import React from "react";
 import { VStack } from "@chakra-ui/react";
 import InputField from "../form/InputField";
 import { useApi } from "../../hook/useApi";
 import api from "../api";
-import { createExpanseFormId } from "../utils";
+import { createExpenseFormId } from "../utils";
 import dayjs from "dayjs";
 import isNil from "lodash/isNil";
 
-const ExpansesForm = ({
+const ExpensesForm = ({
   projectId,
   onSuccess,
   defaultValues,
@@ -17,11 +17,11 @@ const ExpansesForm = ({
 }: {
   projectId: string;
   onSuccess?: () => void;
-  defaultValues?: CreateExpanseInterface;
-  onEditExpense?: (values: CreateExpanseInterface) => void;
+  defaultValues?: CreateExpenseInterface;
+  onEditExpense?: (values: CreateExpenseInterface) => void;
 }) => {
   const { makeApiCall } = useApi();
-  const expansesHookForm = useForm<CreateExpanseInterface>({
+  const expensesHookForm = useForm<CreateExpenseInterface>({
     mode: "onChange",
     defaultValues: defaultValues ?? {
       title: "",
@@ -32,16 +32,16 @@ const ExpansesForm = ({
     },
   });
 
-  const onSubmit = (values: CreateExpanseInterface) => {
+  const onSubmit = (values: CreateExpenseInterface) => {
     if (isNil(defaultValues)) {
       makeApiCall({
         apiFn: () =>
-          api("/expanse/create", {
+          api("/expense/create", {
             method: "POST",
             data: { ...values, date: dayjs(values.date).toISOString() },
           }),
         successMsg: {
-          title: "Expanse added successfully",
+          title: "Expense added successfully",
         },
         onSuccess: (res) => onSuccess?.(),
       });
@@ -52,22 +52,22 @@ const ExpansesForm = ({
 
   return (
     <form
-      id={createExpanseFormId}
-      onSubmit={expansesHookForm.handleSubmit(onSubmit)}
+      id={createExpenseFormId}
+      onSubmit={expensesHookForm.handleSubmit(onSubmit)}
       style={{
         width: "100%",
       }}
     >
       <VStack alignItems="stretch" spaceY={4}>
         <InputField
-          hForm={expansesHookForm}
+          hForm={expensesHookForm}
           name="title"
           title="Title"
-          placeholder="Enter Expanse Title"
+          placeholder="Enter Expense Title"
           rules={{ required: true }}
         />
         <InputField
-          hForm={expansesHookForm}
+          hForm={expensesHookForm}
           name="spent"
           title="Spent Amount"
           placeholder="Enter Amount"
@@ -76,7 +76,7 @@ const ExpansesForm = ({
           min={1}
         />
         <InputField
-          hForm={expansesHookForm}
+          hForm={expensesHookForm}
           name="date"
           rules={{
             required: true,
@@ -91,4 +91,4 @@ const ExpansesForm = ({
   );
 };
 
-export default ExpansesForm;
+export default ExpensesForm;
