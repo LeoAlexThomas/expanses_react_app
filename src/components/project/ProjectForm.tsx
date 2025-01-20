@@ -9,14 +9,22 @@ import { useApi } from "../../hook/useApi";
 import api from "../api";
 import CustomReactAsyncSelectField from "../form/CustomReactAsyncSelectField";
 import { UserInterface } from "@/types/user";
-import { isArray } from "lodash";
+import { isArray, isNil } from "lodash";
 import { mutate } from "swr";
 
-const ProjectForm = ({ onSuccess }: { onSuccess?: () => void }) => {
+const ProjectForm = ({
+  defaultValues,
+  onSuccess,
+  onEditProject,
+}: {
+  defaultValues?: CreateProjectInterface;
+  onSuccess?: () => void;
+  onEditProject?: (values: any) => void;
+}) => {
   const { makeApiCall } = useApi();
   const projectHookForm = useForm<CreateProjectInterface>({
     mode: "onChange",
-    defaultValues: {
+    defaultValues: defaultValues ?? {
       title: "",
       totalSpent: 0,
       memberIds: [],
@@ -30,20 +38,24 @@ const ProjectForm = ({ onSuccess }: { onSuccess?: () => void }) => {
       description: values.description || null,
       members: values.memberIds.map((member) => member.value),
     };
-    makeApiCall({
-      apiFn: () =>
-        api("/project/create", {
-          method: "POST",
-          data: requestObj,
-        }),
-      successMsg: {
-        title: "Project created successfully",
-      },
-      onSuccess: (res) => {
-        mutate("/project/all");
-        onSuccess?.();
-      },
-    });
+    if (isNil(defaultValues)) {
+      makeApiCall({
+        apiFn: () =>
+          api("/project/create", {
+            method: "POST",
+            data: requestObj,
+          }),
+        successMsg: {
+          title: "Project created successfully",
+        },
+        onSuccess: (res) => {
+          mutate("/project/all");
+          onSuccess?.();
+        },
+      });
+      return;
+    }
+    onEditProject?.(requestObj);
   };
 
   return (

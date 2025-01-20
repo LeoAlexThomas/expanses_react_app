@@ -12,6 +12,7 @@ export interface CreateExpanseInterface {
   title: string;
   spent: number;
   date: string;
+  isCompleted: boolean;
   projectId: string;
 }
 

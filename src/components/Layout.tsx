@@ -45,7 +45,7 @@ const Header = () => {
             lineHeight="1.25"
             color={colors.greyColor[0]}
           >
-            Expanses
+            Expenses
           </Text>
         </HStack>
         <HStack>

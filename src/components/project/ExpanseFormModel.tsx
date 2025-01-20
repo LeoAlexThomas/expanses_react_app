@@ -1,3 +1,4 @@
+import { CreateExpanseInterface } from "@/types/project";
 import { PrimaryButton, SecondaryButton } from "../Buttons";
 import CustomModel from "../CustomModal";
 import { createExpanseFormId } from "../utils";
@@ -8,27 +9,36 @@ const ExpanseFormModel = ({
   isOpen,
   onClose,
   onSuccess,
+  onEditExpense,
+  defaultFormValues,
 }: {
   projectId: string;
   isOpen: boolean;
   onClose: () => void;
   onSuccess?: () => void;
+  onEditExpense?: (values: CreateExpanseInterface) => void;
+  defaultFormValues?: CreateExpanseInterface;
 }) => {
   return (
     <CustomModel
       isOpen={isOpen}
       onClose={onClose}
-      title="Create Expanse"
+      title={defaultFormValues ? "Edit Expense" : "Create Expense"}
       footer={
         <>
           <PrimaryButton form={createExpanseFormId} type="submit">
-            Create Expanse
+            {defaultFormValues ? "Edit Expense" : "Create Expense"}
           </PrimaryButton>
           <SecondaryButton onClick={onClose}>Close</SecondaryButton>
         </>
       }
     >
-      <ExpansesForm projectId={projectId} onSuccess={onSuccess} />
+      <ExpansesForm
+        projectId={projectId}
+        onSuccess={onSuccess}
+        onEditExpense={onEditExpense}
+        defaultValues={defaultFormValues}
+      />
     </CustomModel>
   );
 };

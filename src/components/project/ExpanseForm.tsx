@@ -7,37 +7,47 @@ import { useApi } from "../../hook/useApi";
 import api from "../api";
 import { createExpanseFormId } from "../utils";
 import dayjs from "dayjs";
+import isNil from "lodash/isNil";
 
 const ExpansesForm = ({
   projectId,
   onSuccess,
+  defaultValues,
+  onEditExpense,
 }: {
   projectId: string;
   onSuccess?: () => void;
+  defaultValues?: CreateExpanseInterface;
+  onEditExpense?: (values: CreateExpanseInterface) => void;
 }) => {
   const { makeApiCall } = useApi();
   const expansesHookForm = useForm<CreateExpanseInterface>({
     mode: "onChange",
-    defaultValues: {
+    defaultValues: defaultValues ?? {
       title: "",
       spent: 0,
       date: "",
+      isCompleted: false,
       projectId: projectId,
     },
   });
 
   const onSubmit = (values: CreateExpanseInterface) => {
-    makeApiCall({
-      apiFn: () =>
-        api("/expanse/create", {
-          method: "POST",
-          data: { ...values, date: dayjs(values.date).toISOString() },
-        }),
-      successMsg: {
-        title: "Expanse added successfully",
-      },
-      onSuccess: (res) => onSuccess?.(),
-    });
+    if (isNil(defaultValues)) {
+      makeApiCall({
+        apiFn: () =>
+          api("/expanse/create", {
+            method: "POST",
+            data: { ...values, date: dayjs(values.date).toISOString() },
+          }),
+        successMsg: {
+          title: "Expanse added successfully",
+        },
+        onSuccess: (res) => onSuccess?.(),
+      });
+      return;
+    }
+    onEditExpense?.(values);
   };
 
   return (

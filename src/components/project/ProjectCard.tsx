@@ -12,7 +12,19 @@ const ProjectCard = ({ project }: { project: ProjectInterface }) => {
         width: "100%",
       }}
     >
-      <HStack p={3} boxShadow="md" borderRadius="8px" gap={[4, null, 8]}>
+      <HStack
+        p={3}
+        boxShadow="md"
+        borderRadius="8px"
+        gap={[4, null, 8]}
+        h="100px"
+        transition="transform 0.3s ease-in-out"
+        bg="white"
+        _hover={{
+          boxShadow: "lg",
+          transform: "scale(1.03)",
+        }}
+      >
         <VStack alignItems="stretch" spaceY={1}>
           <Text
             fontFamily="Playfair Display"

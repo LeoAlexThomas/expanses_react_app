@@ -1,11 +1,19 @@
 import Head from "next/head";
-import { Box, IconButton, useDisclosure, HStack } from "@chakra-ui/react";
+import {
+  Box,
+  IconButton,
+  useDisclosure,
+  HStack,
+  Center,
+  Text,
+} from "@chakra-ui/react";
 import { AddCircle } from "@emotion-icons/fluentui-system-regular/AddCircle";
 import ProjectFormModel from "@/components/project/ProjectFormModel";
 import WithLoader from "@/components/WithLoader";
 import { ProjectInterface } from "@/types/project";
 import ProjectCard from "@/components/project/ProjectCard";
 import Layout from "@/components/Layout";
+import { isEmpty } from "lodash";
 
 export default function Home() {
   const { open: isOpen, onOpen, onClose } = useDisclosure();
@@ -21,6 +29,13 @@ export default function Home() {
         <ProjectFormModel isOpen={isOpen} onClose={onClose} />
         <WithLoader apiUrl={`/project/all`}>
           {({ data }: { data: ProjectInterface[] }) => {
+            if (isEmpty(data)) {
+              return (
+                <Center h="100%">
+                  <Text>No projects found</Text>
+                </Center>
+              );
+            }
             return (
               <HStack
                 wrap="wrap"

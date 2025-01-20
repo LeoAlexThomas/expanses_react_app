@@ -23,6 +23,28 @@ export const colors = {
     "#254a6b",
     "#1f3f5c",
   ],
+  greenColor: [
+    "#E1EAD6",
+    "#C3D6AE",
+    "#A5C285",
+    "#87AE5D",
+    "#6a9a35",
+    "#547B2A",
+    "#3F5C1F",
+    "#2A3D15",
+    "#151E0A",
+  ],
+  redColor: [
+    "#F9D0D0",
+    "#F4A2A2",
+    "#EF7474",
+    "#EA4646",
+    "#e51818",
+    "#B71313",
+    "#890E0E",
+    "#5B0909",
+    "#2D0404",
+  ],
 };
 
 export const createProjectFormId = "createProjectFormId";
