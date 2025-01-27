@@ -13,7 +13,7 @@ import WithLoader from "@/components/WithLoader";
 import { ProjectInterface } from "@/types/project";
 import ProjectCard from "@/components/project/ProjectCard";
 import Layout from "@/components/Layout";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 
 export default function Home() {
   const { open: isOpen, onOpen, onClose } = useDisclosure();
@@ -47,7 +47,7 @@ export default function Home() {
               >
                 {data.map((project) => {
                   return (
-                    <Box key={project._id}>
+                    <Box w={["100%", "fit-content"]} key={project._id}>
                       <ProjectCard project={project} />
                     </Box>
                   );

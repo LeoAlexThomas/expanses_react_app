@@ -20,28 +20,15 @@ export const ThemeCheckProvider = ({
   const [isDarkTheme, setIsDarkTheme] = useState<boolean>(false);
 
   useEffect(() => {
-    const themeChangeListener = (event: any) => {
-      if (event.matches) {
-        setCurrentTheme(ThemeEnum.dark);
-        setIsDarkTheme(true);
-      } else {
-        setCurrentTheme(ThemeEnum.light);
-        setIsDarkTheme(false);
-      }
-    };
-
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    mediaQuery.addEventListener("change", themeChangeListener);
-
-    return () => {
-      mediaQuery.removeEventListener("change", themeChangeListener);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (currentTheme === ThemeEnum.light) {
+    if (mediaQuery.matches) {
+      setCurrentTheme(ThemeEnum.dark);
+      setIsDarkTheme(true);
+    } else {
+      setCurrentTheme(ThemeEnum.light);
+      setIsDarkTheme(false);
     }
-  }, [currentTheme]);
+  }, []);
 
   return (
     <ThemeCheckContext.Provider

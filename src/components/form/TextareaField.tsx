@@ -15,7 +15,7 @@ import {
   UseFormReturn,
 } from "react-hook-form";
 import { Field } from "@/components/ui/field";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 
 interface CustomTextAreaFieldProps<T extends FieldValues> {
   name: Path<T>;

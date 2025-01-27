@@ -9,7 +9,9 @@ import { useApi } from "../../hook/useApi";
 import api from "../api";
 import CustomReactAsyncSelectField from "../form/CustomReactAsyncSelectField";
 import { UserInterface } from "@/types/user";
-import { isArray, isNil } from "lodash";
+import isArray from "lodash/isArray";
+import isNil from "lodash/isNil";
+import uniq from "lodash/uniq";
 import { mutate } from "swr";
 
 const ProjectForm = ({
@@ -36,7 +38,7 @@ const ProjectForm = ({
       ...values,
       title: values.title.trim(),
       description: values.description || null,
-      members: values.memberIds.map((member) => member.value),
+      members: uniq(values.memberIds.map((member) => member.value)),
     };
     if (isNil(defaultValues)) {
       makeApiCall({

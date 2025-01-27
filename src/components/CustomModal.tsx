@@ -5,11 +5,13 @@ import {
   DialogHeader,
   DialogRoot,
 } from "@/components/ui/dialog";
+import { useThemeCheck } from "@/context/themeCheck";
 import {
   DialogFooterProps,
   DialogHeaderProps,
   DialogRootProps,
 } from "@chakra-ui/react";
+import { colors } from "./utils";
 
 const CustomModel = ({
   isOpen,
@@ -29,6 +31,7 @@ const CustomModel = ({
   modalFooterProps?: DialogFooterProps;
   children: React.ReactNode;
 } & DialogRootProps) => {
+  const { isDarkTheme } = useThemeCheck();
   return (
     <DialogRoot
       open={isOpen}
@@ -53,7 +56,11 @@ const CustomModel = ({
           {title}
         </DialogHeader>
 
-        <DialogBody px={6} py={4} bg="blue.50">
+        <DialogBody
+          px={6}
+          py={4}
+          bg={isDarkTheme ? colors.blueColor[0] : "#356a9a30"}
+        >
           {children}
         </DialogBody>
         <DialogFooter py={2} pr={4} {...modalFooterProps}>

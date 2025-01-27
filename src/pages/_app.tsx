@@ -40,17 +40,17 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <SWRConfig value={swrConfigData}>
-        <ThemeCheckProvider>
-          <LoginCheckProvider>
-            <UserInfoProvider>
-              <Provider>
+        <Provider>
+          <ThemeCheckProvider>
+            <LoginCheckProvider>
+              <UserInfoProvider>
                 <PageLoaderProvider>
                   {getLayout(<Component {...pageProps} key={router.asPath} />)}
                 </PageLoaderProvider>
-              </Provider>
-            </UserInfoProvider>
-          </LoginCheckProvider>
-        </ThemeCheckProvider>
+              </UserInfoProvider>
+            </LoginCheckProvider>
+          </ThemeCheckProvider>
+        </Provider>
       </SWRConfig>
     </>
   );

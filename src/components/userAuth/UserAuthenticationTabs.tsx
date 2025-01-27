@@ -2,8 +2,8 @@ import { Center, Box, Tabs, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import UserSignUpForm from "@/components/userAuth/UserSignUpForm";
 import UserSignInForm from "@/components/userAuth/UserSignInForm";
-import { colors } from "../utils";
 import { useThemeCheck } from "@/context/themeCheck";
+import { colors } from "../utils";
 
 enum AuthTabStateEnum {
   signIn = "signIn",

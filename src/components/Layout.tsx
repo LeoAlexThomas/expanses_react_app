@@ -7,7 +7,13 @@ import { LogOut } from "@emotion-icons/boxicons-regular/LogOut";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <VStack alignItems="stretch">
+    <VStack
+      alignItems="stretch"
+      h="100vh"
+      bgGradient="to-bl"
+      gradientFrom="#356a9a10"
+      gradientTo="#356a9a90"
+    >
       <Header />
       {children}
     </VStack>

@@ -1,13 +1,8 @@
 import UserAuthenticationTabs from "@/components/userAuth/UserAuthenticationTabs";
 import { colors } from "@/components/utils";
-import { useThemeCheck } from "@/context/themeCheck";
 import { Center, Image, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 
 const SignIn = () => {
-  const { isDarkTheme } = useThemeCheck();
-
-  console.log("Dark Theme: ", isDarkTheme);
-
   return (
     <VStack
       w="100%"

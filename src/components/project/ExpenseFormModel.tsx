@@ -27,7 +27,7 @@ const ExpenseFormModel = ({
       footer={
         <>
           <PrimaryButton form={createExpenseFormId} type="submit">
-            {defaultFormValues ? "Edit Expense" : "Create Expense"}
+            {defaultFormValues ? "Save Expense" : "Create Expense"}
           </PrimaryButton>
           <SecondaryButton onClick={onClose}>Close</SecondaryButton>
         </>
