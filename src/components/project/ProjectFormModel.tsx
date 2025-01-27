@@ -23,7 +23,7 @@ const ProjectFormModel = ({
       footer={
         <>
           <PrimaryButton form={createProjectFormId} type="submit">
-            {defaultFormValues ? "Edit Project" : "Create Project"}
+            {defaultFormValues ? "Save Project" : "Create Project"}
           </PrimaryButton>
           <SecondaryButton onClick={onClose}>Close</SecondaryButton>
         </>

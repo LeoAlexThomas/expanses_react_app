@@ -23,7 +23,7 @@ import CustomModel from "@/components/CustomModal";
 import { useApi } from "@/hook/useApi";
 import api from "@/components/api";
 import ProjectFormModel from "@/components/project/ProjectFormModel";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 import ExpenseFormModel from "@/components/project/ExpenseFormModel";
 import ExpenseCard from "@/components/project/ExpenseCard";
 
@@ -140,21 +140,25 @@ const ProjectIdPage = () => {
                 </Text>
               </CustomModel>
               <VStack alignItems="stretch" spaceY={3}>
-                <HStack>
-                  <Stack
-                    w="100%"
-                    alignItems="stretch"
-                    justifyContent="space-between"
-                    direction={{ base: "column", sm: "row" }}
+                <Stack
+                  w="100%"
+                  alignItems="stretch"
+                  justifyContent="space-between"
+                  direction={{ base: "column", sm: "row" }}
+                >
+                  <Text
+                    fontFamily="Playfair Display"
+                    fontSize={["20px", null, "36px"]}
+                    fontWeight={800}
+                    lineHeight="1.25"
                   >
-                    <Text
-                      fontFamily="Playfair Display"
-                      fontSize={["20px", null, "36px"]}
-                      fontWeight={800}
-                      lineHeight="1.25"
-                    >
-                      {data.title}
-                    </Text>
+                    {data.title}
+                  </Text>
+                  <Stack
+                    alignItems={{ base: "center", sm: "flex-end" }}
+                    justifyContent={{ base: "space-between", sm: "flex-end" }}
+                    direction={{ base: "row", sm: "column" }}
+                  >
                     {data.totalSpent > 0 && (
                       <Text
                         fontFamily="Roboto"
@@ -166,30 +170,32 @@ const ProjectIdPage = () => {
                         INR {data.totalSpent}
                       </Text>
                     )}
+                    <HStack>
+                      <IconButton
+                        variant="outline"
+                        borderColor={colors.blueColor[3]}
+                        _icon={{
+                          w: "25px",
+                          h: "25px",
+                        }}
+                        onClick={onEditProjectOpen}
+                      >
+                        <Edit color={colors.blueColor[4]} />
+                      </IconButton>
+                      <IconButton
+                        variant="plain"
+                        bg={colors.redColor[0]}
+                        _icon={{
+                          w: "25px",
+                          h: "25px",
+                        }}
+                        onClick={onConfirmationOpen}
+                      >
+                        <Delete color={colors.redColor[4]} />
+                      </IconButton>
+                    </HStack>
                   </Stack>
-                  <IconButton
-                    variant="outline"
-                    borderColor={colors.blueColor[3]}
-                    _icon={{
-                      w: "25px",
-                      h: "25px",
-                    }}
-                    onClick={onEditProjectOpen}
-                  >
-                    <Edit color={colors.blueColor[4]} />
-                  </IconButton>
-                  <IconButton
-                    variant="plain"
-                    bg={colors.redColor[0]}
-                    _icon={{
-                      w: "25px",
-                      h: "25px",
-                    }}
-                    onClick={onConfirmationOpen}
-                  >
-                    <Delete color={colors.redColor[4]} />
-                  </IconButton>
-                </HStack>
+                </Stack>
                 {data.description && (
                   <Text
                     fontFamily="Roboto"
@@ -210,7 +216,7 @@ const ProjectIdPage = () => {
                 fontWeight={800}
                 lineHeight="1.25"
               >
-                Expenses:{" "}
+                Expenses :{" "}
               </Text>
               <Spacer h={4} />
               {isEmpty(data.expenses) ? (

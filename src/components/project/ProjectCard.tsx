@@ -3,23 +3,25 @@ import { chakra, HStack, Text, VStack } from "@chakra-ui/react";
 import { colors } from "../utils";
 import Link from "next/link";
 import { Avatar, AvatarGroup } from "../ui/avatar";
+import { useThemeCheck } from "@/context/themeCheck";
 
 const ProjectCard = ({ project }: { project: ProjectInterface }) => {
+  const { isDarkTheme } = useThemeCheck();
   return (
-    <Link
-      href={`/project/${project._id}`}
-      style={{
-        width: "100%",
-      }}
-    >
+    <Link href={`/project/${project._id}`}>
       <HStack
         p={3}
         boxShadow="md"
         borderRadius="8px"
         gap={[4, null, 8]}
-        h="100px"
+        maxW="400px"
         transition="transform 0.3s ease-in-out"
-        bg="white"
+        bgGradient="to-br"
+        gradientFrom={isDarkTheme ? colors.greyColor[4] : colors.greyColor[0]}
+        gradientTo={isDarkTheme ? colors.greyColor[8] : colors.greyColor[5]}
+        border="2px solid"
+        borderColor={colors.greyColor[5]}
+        justifyContent="space-between"
         _hover={{
           boxShadow: "lg",
           transform: "scale(1.03)",
@@ -31,6 +33,7 @@ const ProjectCard = ({ project }: { project: ProjectInterface }) => {
             fontSize={["16px", null, "18px"]}
             fontWeight={800}
             lineHeight="1.25"
+            color={isDarkTheme ? colors.greyColor[0] : colors.greyColor[8]}
           >
             {project.title}
           </Text>
@@ -41,7 +44,7 @@ const ProjectCard = ({ project }: { project: ProjectInterface }) => {
               lineHeight="1.25"
               maxLines={2}
               textOverflow="ellipsis"
-              color={colors.greyColor[5]}
+              color={isDarkTheme ? colors.greyColor[2] : colors.greyColor[6]}
             >
               {project.description}
             </Text>
@@ -51,6 +54,7 @@ const ProjectCard = ({ project }: { project: ProjectInterface }) => {
             fontSize={["12px", null, "14px"]}
             lineHeight="1.25"
             fontWeight={500}
+            color={isDarkTheme ? colors.greyColor[2] : colors.greyColor[6]}
           >
             Sub-Expenses: {project.expenses.length}
           </Text>
@@ -62,6 +66,7 @@ const ProjectCard = ({ project }: { project: ProjectInterface }) => {
               fontSize={["12px", null, "14px"]}
               lineHeight="1.25"
               fontWeight={500}
+              color={isDarkTheme ? colors.greyColor[2] : colors.greyColor[6]}
             >
               Spent:{" "}
               <chakra.span fontWeight={800} color="red">

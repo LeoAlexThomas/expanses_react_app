@@ -11,6 +11,7 @@ import { PageLoaderProvider } from "@/context/pageLoaderContext";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Provider } from "@/components/ui/provider";
+import { ThemeCheckProvider } from "@/context/themeCheck";
 
 export const swrConfigData = {
   fetcher: api,
@@ -39,15 +40,17 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <SWRConfig value={swrConfigData}>
-        <LoginCheckProvider>
-          <UserInfoProvider>
-            <Provider>
-              <PageLoaderProvider>
-                {getLayout(<Component {...pageProps} key={router.asPath} />)}
-              </PageLoaderProvider>
-            </Provider>
-          </UserInfoProvider>
-        </LoginCheckProvider>
+        <Provider>
+          <ThemeCheckProvider>
+            <LoginCheckProvider>
+              <UserInfoProvider>
+                <PageLoaderProvider>
+                  {getLayout(<Component {...pageProps} key={router.asPath} />)}
+                </PageLoaderProvider>
+              </UserInfoProvider>
+            </LoginCheckProvider>
+          </ThemeCheckProvider>
+        </Provider>
       </SWRConfig>
     </>
   );

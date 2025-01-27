@@ -1,3 +1,8 @@
+export enum ThemeEnum {
+  dark = "dark",
+  light = "light",
+}
+
 export interface ApiResponse {
   isSuccess: boolean;
   message: string;

@@ -1,5 +1,13 @@
 import { CreateExpenseInterface, ExpenseInterface } from "@/types/project";
-import { chakra, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  chakra,
+  HStack,
+  IconButton,
+  Text,
+  useDisclosure,
+  VStack,
+} from "@chakra-ui/react";
 import dayjs from "dayjs";
 import { Checkbox } from "../ui/checkbox";
 import { useApi } from "@/hook/useApi";
@@ -10,6 +18,7 @@ import { PrimaryButton, SecondaryButton } from "../Buttons";
 import { colors } from "../utils";
 import CustomModel from "../CustomModal";
 import ExpenseFormModel from "./ExpenseFormModel";
+import { useThemeCheck } from "@/context/themeCheck";
 
 const ExpenseCard = ({
   expense,
@@ -19,6 +28,7 @@ const ExpenseCard = ({
   projectMutate?: () => void;
 }) => {
   const { open: isOpen, onOpen, onClose } = useDisclosure();
+  const { isDarkTheme } = useThemeCheck();
   const {
     open: isConfirmationOpen,
     onOpen: onConfirmationOpen,
@@ -59,15 +69,21 @@ const ExpenseCard = ({
   };
 
   return (
-    <VStack
-      alignItems="stretch"
+    <Box
       p={3}
       w="100%"
       boxShadow="md"
       gap={4}
       borderRadius="8px"
+      border="2px solid"
+      borderColor={isDarkTheme ? colors.greyColor[5] : colors.greyColor[0]}
+      bgGradient="to-tr"
+      gradientFrom={isDarkTheme ? colors.greyColor[5] : colors.greyColor[0]}
+      gradientTo={isDarkTheme ? colors.greyColor[8] : colors.greyColor[4]}
+      transition="transform 0.3s ease-in-out"
       _hover={{
-        boxShadow: "md",
+        boxShadow: "lg",
+        transform: "scale(1.02)",
       }}
     >
       <ExpenseFormModel
@@ -116,17 +132,19 @@ const ExpenseCard = ({
         <VStack alignItems="stretch" justifyContent="space-between">
           <Text
             fontFamily="Playfair Display"
-            fontSize={["20px", null, "16px"]}
-            fontWeight={600}
+            fontSize={["20px", null, "26px"]}
+            fontWeight={800}
             lineHeight="1.25"
+            color={isDarkTheme ? colors.greyColor[2] : colors.greyColor[6]}
           >
             {expense.title}
           </Text>
           <Text
             fontFamily="Roboto"
-            fontSize={["14px", null, "16px"]}
+            fontSize={["14px", null, "18px"]}
             lineHeight="1.25"
             fontWeight={500}
+            color={isDarkTheme ? colors.greyColor[2] : colors.greyColor[6]}
           >
             {expense.isCompleted ? "Spent: " : "Payment: "}
             <chakra.span fontWeight={800} color="red">
@@ -135,8 +153,9 @@ const ExpenseCard = ({
           </Text>
           <Text
             fontFamily="Roboto"
-            fontSize={["12px", null, "14px"]}
+            fontSize={["14px", null, "16px"]}
             lineHeight="1.25"
+            color={isDarkTheme ? colors.greyColor[2] : colors.greyColor[6]}
           >
             Last Date:{" "}
             <chakra.span fontWeight={500}>
@@ -144,50 +163,66 @@ const ExpenseCard = ({
             </chakra.span>
           </Text>
         </VStack>
-        <Checkbox
-          checked={expense.isCompleted}
-          onCheckedChange={(e) =>
-            handleUpdateExpense({
-              ...expense,
-              isCompleted: e.checked as boolean,
-            })
-          }
-        />
-      </HStack>
-      <HStack w="100%">
-        <PrimaryButton
-          variant="subtle"
-          bg={colors.redColor[0]}
-          borderRadius="8px"
-          onClick={onConfirmationOpen}
-          color={colors.redColor[4]}
-          _hover={{
-            bg: colors.redColor[1],
-          }}
-          _icon={{
-            w: "20px",
-            h: "20px",
-          }}
+        <VStack
+          alignItems="flex-end"
+          alignSelf="stretch"
+          justifyContent="space-between"
         >
-          <Delete />
-          Delete
-        </PrimaryButton>
-        <SecondaryButton
-          variant="outline"
-          bg="#00000000"
-          borderRadius="8px"
-          onClick={onOpen}
-          color={colors.blueColor[4]}
-          _icon={{
-            w: "15px",
-            h: "15px",
-          }}
-        >
-          <Edit color={colors.blueColor[4]} />
-          Edit
-        </SecondaryButton>
+          <Checkbox
+            _checked={{
+              backgroundColor: isDarkTheme
+                ? colors.blueColor[3]
+                : colors.blueColor[8],
+            }}
+            checked={expense.isCompleted}
+            onCheckedChange={(e) =>
+              handleUpdateExpense({
+                ...expense,
+                isCompleted: e.checked as boolean,
+              })
+            }
+          />
+          <HStack w="100%">
+            <IconButton
+              variant="outline"
+              bg="#00000000"
+              borderRadius="8px"
+              borderColor={
+                isDarkTheme ? colors.blueColor[6] : colors.blueColor[8]
+              }
+              onClick={onOpen}
+              color={colors.blueColor[4]}
+              _icon={{
+                w: "15px",
+                h: "15px",
+              }}
+              _hover={{
+                bg: colors.blueColor[0],
+              }}
+            >
+              <Edit color={colors.blueColor[4]} />
+            </IconButton>
+
+            <IconButton
+              variant="subtle"
+              bg={colors.redColor[0]}
+              borderRadius="8px"
+              onClick={onConfirmationOpen}
+              color={colors.redColor[4]}
+              _hover={{
+                bg: colors.redColor[1],
+              }}
+              _icon={{
+                w: "20px",
+                h: "20px",
+              }}
+            >
+              <Delete />
+            </IconButton>
+          </HStack>
+        </VStack>
       </HStack>
-    </VStack>
+    </Box>
   );
 };
 
