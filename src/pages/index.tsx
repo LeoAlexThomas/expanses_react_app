@@ -45,7 +45,7 @@ export default function Home() {
                 pb={16}
                 alignItems="flex-start"
               >
-                {data.map((project, index) => {
+                {data.map((project) => {
                   return (
                     <Box key={project._id}>
                       <ProjectCard project={project} />

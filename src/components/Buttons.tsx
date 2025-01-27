@@ -1,13 +1,16 @@
 import { Button, ButtonProps } from "@/components/ui/button";
+import { useThemeCheck } from "@/context/themeCheck";
+import { colors } from "./utils";
 
 const PrimaryButton = (props: ButtonProps) => {
+  const { isDarkTheme } = useThemeCheck();
   return (
     <Button
-      backgroundColor="blue.500"
+      backgroundColor={isDarkTheme ? colors.blueColor[2] : colors.blueColor[3]}
       color="white"
       borderRadius="12px"
       _hover={{
-        bgColor: "blue.600",
+        bgColor: isDarkTheme ? colors.blueColor[1] : colors.blueColor[2],
       }}
       px={4}
       {...props}
@@ -16,16 +19,17 @@ const PrimaryButton = (props: ButtonProps) => {
 };
 
 const SecondaryButton = (props: ButtonProps) => {
+  const { isDarkTheme } = useThemeCheck();
   return (
     <Button
       variant="outline"
-      color="blue.500"
+      color={isDarkTheme ? colors.blueColor[0] : colors.blueColor[4]}
       borderRadius="12px"
       border="1px solid"
-      borderColor="blue.500"
+      borderColor={isDarkTheme ? colors.blueColor[0] : colors.blueColor[4]}
       _hover={{
-        bgColor: "blue.50",
-        borderColor: "blue.500",
+        bgColor: isDarkTheme ? colors.blueColor[6] : colors.blueColor[0],
+        borderColor: colors.blueColor[6],
       }}
       px={4}
       {...props}

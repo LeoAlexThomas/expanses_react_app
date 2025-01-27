@@ -1,5 +1,6 @@
 import { Flex, Spinner } from "@chakra-ui/react";
 import { DialogBody, DialogContent, DialogRoot } from "./ui/dialog";
+import { colors } from "./utils";
 
 interface PageLoaderProps {
   isOpen: boolean;
@@ -24,8 +25,8 @@ const PageLoader = (props: PageLoaderProps) => {
     >
       <DialogContent>
         <DialogBody py={8}>
-          <Flex justify="center" align="center" color="black">
-            <Spinner color="highlightColor" mr={3} /> Loading...
+          <Flex justify="center" align="center">
+            <Spinner color={colors.blueColor[6]} mr={3} /> Loading...
           </Flex>
         </DialogBody>
       </DialogContent>

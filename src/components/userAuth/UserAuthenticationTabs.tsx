@@ -2,6 +2,8 @@ import { Center, Box, Tabs, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import UserSignUpForm from "@/components/userAuth/UserSignUpForm";
 import UserSignInForm from "@/components/userAuth/UserSignInForm";
+import { colors } from "../utils";
+import { useThemeCheck } from "@/context/themeCheck";
 
 enum AuthTabStateEnum {
   signIn = "signIn",
@@ -12,7 +14,7 @@ const UserAuthenticationTabs = () => {
   const [selectedTab, setSelectedTab] = useState<AuthTabStateEnum>(
     AuthTabStateEnum.signIn
   );
-
+  const { isDarkTheme } = useThemeCheck();
   return (
     <Center w="100%" p={5}>
       <VStack
@@ -22,6 +24,7 @@ const UserAuthenticationTabs = () => {
         boxShadow="md"
         p={4}
         borderRadius="16px"
+        bg={isDarkTheme ? colors.greyColor[8] : colors.greyColor[1]}
       >
         <Box w="100%" alignSelf="center">
           <Tabs.Root
@@ -29,8 +32,8 @@ const UserAuthenticationTabs = () => {
             value={selectedTab}
             lazyMount
             unmountOnExit
+            fitted
             onValueChange={(e) => {
-              console.log("Selected tab: ", e.value);
               setSelectedTab(e.value as AuthTabStateEnum);
             }}
           >
