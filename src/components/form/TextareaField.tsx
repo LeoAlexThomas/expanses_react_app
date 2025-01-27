@@ -73,7 +73,6 @@ function TextareaField<T extends FieldValues>({
             lineHeight="1.25"
             border="1px solid black"
             _hover={{}}
-            bg="white"
             borderRadius="8px"
             p={2}
             {...props}
